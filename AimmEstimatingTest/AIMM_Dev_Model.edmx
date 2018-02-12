@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AIMM_DevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Estimate">
+          <Key>
+            <PropertyRef Name="EstimateId" />
+          </Key>
+          <Property Name="EstimateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="ProjectNo" Type="int" Nullable="false" />
+          <Property Name="Sequence" Type="int" Nullable="false" />
+          <Property Name="EstimateCalculatorId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EstimateCalculator">
+          <Key>
+            <PropertyRef Name="EstimateCalculatorId" />
+          </Key>
+          <Property Name="EstimateCalculatorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sequence" Type="int" />
+        </EntityType>
+        <EntityType Name="EstimateCalculatorSubCalculator">
+          <Key>
+            <PropertyRef Name="EstimateCalculatorId" />
+            <PropertyRef Name="EstimateSubCalculatorId" />
+          </Key>
+          <Property Name="EstimateCalculatorId" Type="int" Nullable="false" />
+          <Property Name="EstimateSubCalculatorId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EstimateProjectType">
+          <Key>
+            <PropertyRef Name="EstimateProjectTypeId" />
+          </Key>
+          <Property Name="EstimateProjectTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sequence" Type="int" />
+        </EntityType>
+        <EntityType Name="EstimateSubCalculator">
+          <Key>
+            <PropertyRef Name="EstimateSubCalculatorId" />
+          </Key>
+          <Property Name="EstimateSubCalculatorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sequence" Type="int" />
+        </EntityType>
+        <Association Name="FK_EstimateCalculatorSubCalculator_EstimateCalculator">
+          <End Role="EstimateCalculator" Type="Self.EstimateCalculator" Multiplicity="1" />
+          <End Role="EstimateCalculatorSubCalculator" Type="Self.EstimateCalculatorSubCalculator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstimateCalculator">
+              <PropertyRef Name="EstimateCalculatorId" />
+            </Principal>
+            <Dependent Role="EstimateCalculatorSubCalculator">
+              <PropertyRef Name="EstimateCalculatorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EstimateCalculatorSubCalculator_EstimateSubCalculator">
+          <End Role="EstimateSubCalculator" Type="Self.EstimateSubCalculator" Multiplicity="1" />
+          <End Role="EstimateCalculatorSubCalculator" Type="Self.EstimateCalculatorSubCalculator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstimateSubCalculator">
+              <PropertyRef Name="EstimateSubCalculatorId" />
+            </Principal>
+            <Dependent Role="EstimateCalculatorSubCalculator">
+              <PropertyRef Name="EstimateSubCalculatorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AIMM_DevModelStoreContainer">
+          <EntitySet Name="Estimate" EntityType="Self.Estimate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstimateCalculator" EntityType="Self.EstimateCalculator" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstimateCalculatorSubCalculator" EntityType="Self.EstimateCalculatorSubCalculator" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstimateProjectType" EntityType="Self.EstimateProjectType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstimateSubCalculator" EntityType="Self.EstimateSubCalculator" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EstimateCalculatorSubCalculator_EstimateCalculator" Association="Self.FK_EstimateCalculatorSubCalculator_EstimateCalculator">
+            <End Role="EstimateCalculator" EntitySet="EstimateCalculator" />
+            <End Role="EstimateCalculatorSubCalculator" EntitySet="EstimateCalculatorSubCalculator" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EstimateCalculatorSubCalculator_EstimateSubCalculator" Association="Self.FK_EstimateCalculatorSubCalculator_EstimateSubCalculator">
+            <End Role="EstimateSubCalculator" EntitySet="EstimateSubCalculator" />
+            <End Role="EstimateCalculatorSubCalculator" EntitySet="EstimateCalculatorSubCalculator" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AIMM_DevModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Estimate">
+          <Key>
+            <PropertyRef Name="EstimateId" />
+          </Key>
+          <Property Name="EstimateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="ProjectNo" Type="Int32" Nullable="false" />
+          <Property Name="Sequence" Type="Int32" Nullable="false" />
+          <Property Name="EstimateCalculatorId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EstimateCalculator">
+          <Key>
+            <PropertyRef Name="EstimateCalculatorId" />
+          </Key>
+          <Property Name="EstimateCalculatorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sequence" Type="Int32" />
+          <NavigationProperty Name="EstimateSubCalculators" Relationship="Self.EstimateCalculatorSubCalculator" FromRole="EstimateCalculator" ToRole="EstimateSubCalculator" />
+        </EntityType>
+        <EntityType Name="EstimateProjectType">
+          <Key>
+            <PropertyRef Name="EstimateProjectTypeId" />
+          </Key>
+          <Property Name="EstimateProjectTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sequence" Type="Int32" />
+        </EntityType>
+        <EntityType Name="EstimateSubCalculator">
+          <Key>
+            <PropertyRef Name="EstimateSubCalculatorId" />
+          </Key>
+          <Property Name="EstimateSubCalculatorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sequence" Type="Int32" />
+          <NavigationProperty Name="EstimateCalculators" Relationship="Self.EstimateCalculatorSubCalculator" FromRole="EstimateSubCalculator" ToRole="EstimateCalculator" />
+        </EntityType>
+        <Association Name="EstimateCalculatorSubCalculator">
+          <End Role="EstimateCalculator" Type="Self.EstimateCalculator" Multiplicity="*" />
+          <End Role="EstimateSubCalculator" Type="Self.EstimateSubCalculator" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="AIMM_DevEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Estimates" EntityType="Self.Estimate" />
+          <EntitySet Name="EstimateCalculators" EntityType="Self.EstimateCalculator" />
+          <EntitySet Name="EstimateProjectTypes" EntityType="Self.EstimateProjectType" />
+          <EntitySet Name="EstimateSubCalculators" EntityType="Self.EstimateSubCalculator" />
+          <AssociationSet Name="EstimateCalculatorSubCalculator" Association="Self.EstimateCalculatorSubCalculator">
+            <End Role="EstimateCalculator" EntitySet="EstimateCalculators" />
+            <End Role="EstimateSubCalculator" EntitySet="EstimateSubCalculators" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AIMM_DevModelStoreContainer" CdmEntityContainer="AIMM_DevEntities">
+          <EntitySetMapping Name="Estimates">
+            <EntityTypeMapping TypeName="AIMM_DevModel.Estimate">
+              <MappingFragment StoreEntitySet="Estimate">
+                <ScalarProperty Name="EstimateId" ColumnName="EstimateId" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="ProjectNo" ColumnName="ProjectNo" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="EstimateCalculatorId" ColumnName="EstimateCalculatorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EstimateCalculators">
+            <EntityTypeMapping TypeName="AIMM_DevModel.EstimateCalculator">
+              <MappingFragment StoreEntitySet="EstimateCalculator">
+                <ScalarProperty Name="EstimateCalculatorId" ColumnName="EstimateCalculatorId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EstimateProjectTypes">
+            <EntityTypeMapping TypeName="AIMM_DevModel.EstimateProjectType">
+              <MappingFragment StoreEntitySet="EstimateProjectType">
+                <ScalarProperty Name="EstimateProjectTypeId" ColumnName="EstimateProjectTypeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EstimateSubCalculators">
+            <EntityTypeMapping TypeName="AIMM_DevModel.EstimateSubCalculator">
+              <MappingFragment StoreEntitySet="EstimateSubCalculator">
+                <ScalarProperty Name="EstimateSubCalculatorId" ColumnName="EstimateSubCalculatorId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="EstimateCalculatorSubCalculator" TypeName="AIMM_DevModel.EstimateCalculatorSubCalculator" StoreEntitySet="EstimateCalculatorSubCalculator">
+            <EndProperty Name="EstimateCalculator">
+              <ScalarProperty Name="EstimateCalculatorId" ColumnName="EstimateCalculatorId" />
+            </EndProperty>
+            <EndProperty Name="EstimateSubCalculator">
+              <ScalarProperty Name="EstimateSubCalculatorId" ColumnName="EstimateSubCalculatorId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
